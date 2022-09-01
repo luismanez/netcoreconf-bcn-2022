@@ -16,7 +16,7 @@ public class CleanUpActivity
             [ActivityTrigger] IDurableActivityContext context,
             ILogger log)
     {
-        log.LogInformation($"{nameof(CleanUpActivity)}_Started. Id: {context.InstanceId}");
+        log.LogInformation($"{nameof(CleanUpActivity)}_Started. InstanceId: {context.InstanceId}");
 
         // Simulates some cleanup actions after Sync is done
         // (i.e: delete Teams in our custom index that does not exist anymore)
@@ -25,5 +25,7 @@ public class CleanUpActivity
 
         var delay = int.Parse(Environment.GetEnvironmentVariable("CleanUpActivityDelayInMiliseconds") ?? "10");
         await Task.Delay(delay);
+
+        log.LogInformation($"{nameof(CleanUpActivity)}_Finished. Id: {context.InstanceId}");
     }
 }

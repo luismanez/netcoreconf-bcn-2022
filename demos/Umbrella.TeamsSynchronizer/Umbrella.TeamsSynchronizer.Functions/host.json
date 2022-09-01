@@ -15,7 +15,7 @@
       "Function.GetAllTeamsFromGraphActivity.User": "Trace",
       "Function.GetTeamExtendedInformationAndIndexItActivity.User": "Trace",
       "Function.SendNotificationActivity.User": "Trace",
-      "default": "Information"
+      "default": "None"
     }
   },
   "extensions": {

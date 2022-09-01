@@ -20,12 +20,12 @@ public class GetAllTeamsFromGraphActivity
         var totalWorkspacesToProcessCount = 
             int.Parse(Environment.GetEnvironmentVariable("NumberOfItemsToProcess") ?? "3");
         
-        log.LogInformation($"GetAllTeamsFromGraphActivity: {totalWorkspacesToProcessCount}. InstanceId: {activityContext.InstanceId}");
+        log.LogInformation($"GetAllTeamsFromGraphActivity_Started. ItemsToProcess: {totalWorkspacesToProcessCount}. InstanceId: {activityContext.InstanceId}");
 
         var delay = int.Parse(Environment.GetEnvironmentVariable("GetAllTeamsFromGraphActivityDelayInMiliseconds") ?? "10");
         await Task.Delay(delay);
         
-        log.LogDebug($"GetAllTeamsFromGraphActivityDelay: {delay}");
+        //log.LogDebug($"GetAllTeamsFromGraphActivityDelay: {delay}");
 
         var highVolumeList = new List<SyncWorkspaceDto>();
 
@@ -36,6 +36,8 @@ public class GetAllTeamsFromGraphActivity
         {
             highVolumeList.Add(SyncWorkspaceDto.NewFakeWorkspaceDto());
         }
+
+        log.LogInformation($"GetAllTeamsFromGraphActivity_Finished. ItemsToProcess: {totalWorkspacesToProcessCount}. InstanceId: {activityContext.InstanceId}");
 
         return highVolumeList;
     }

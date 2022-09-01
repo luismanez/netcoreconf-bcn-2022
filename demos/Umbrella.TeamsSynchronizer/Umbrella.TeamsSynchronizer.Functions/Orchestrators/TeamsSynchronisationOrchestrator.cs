@@ -22,6 +22,8 @@ public class TeamsSynchronisationOrchestrator
 		{
             log = context.CreateReplaySafeLogger(log);
 
+            log.LogInformation($"TeamsSynchronisationOrchestrator_Started. InstanceId: {context.InstanceId}. ParentId: {context.ParentInstanceId}");
+
             var teamsToProcess = 
                 await context.CallActivityAsync<IEnumerable<SyncWorkspaceDto>>(nameof(GetAllTeamsFromGraphActivity), null);
 
@@ -44,6 +46,8 @@ public class TeamsSynchronisationOrchestrator
             await context.CallActivityAsync(
                 nameof(SendNotificationActivity), 
                 syncedTeams);
+
+            log.LogInformation($"TeamsSynchronisationOrchestrator_Finished. InstanceId: {context.InstanceId}. ParentId: {context.ParentInstanceId}");
         }
         catch (Exception ex)
         {

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Umbrella.TeamsSynchronizer.Models;
 using System.Linq;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace Umbrella.TeamsSynchronizer.Functions.Activities;
 
@@ -17,6 +16,9 @@ public class SendNotificationActivity
             [ActivityTrigger] IDurableActivityContext context,
             ILogger log)
     {
+        log.LogInformation(
+            $"{nameof(SendNotificationActivity)}_Started. InstanceId: {context.InstanceId}");
+
         // Simulates creating a report with details about all the Teams that have been synced/removed
         // and sends a notification (Email, Teams feed...) with that report
         var syncedTeams = context.GetInput<IEnumerable<SyncWorkspaceDto>>();
@@ -24,6 +26,6 @@ public class SendNotificationActivity
         await Task.Delay(delay);
 
         log.LogInformation(
-            $"{nameof(SendNotificationActivity)}_Started. Teams synced: {syncedTeams.Count()}");
+            $"{nameof(SendNotificationActivity)}_Finished. Teams synced: {syncedTeams.Count()}");
     }
 }

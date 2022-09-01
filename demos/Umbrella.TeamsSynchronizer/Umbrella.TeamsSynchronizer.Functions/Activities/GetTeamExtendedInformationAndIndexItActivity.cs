@@ -11,17 +11,20 @@ public class GetTeamExtendedInformationAndIndexItActivity
 {
     [FunctionName(nameof(GetTeamExtendedInformationAndIndexItActivity))]
     public async Task<SyncWorkspaceDto> Run(
-            [ActivityTrigger] SyncWorkspaceDto workspaceWithGroup,
+            [ActivityTrigger] IDurableActivityContext context,
             ILogger log)
     {
-        log.LogInformation($"{nameof(GetTeamExtendedInformationAndIndexItActivity)}_Started.");
+        log.LogInformation($"{nameof(GetTeamExtendedInformationAndIndexItActivity)}_Started. InstanceId: {context.InstanceId}");
 
         // Simulates getting information for that MS Teams that can be in external systems
         // and also to Index all the info gathered for the Team, into an Azure Search Index
+        var workspaceWithGroup = context.GetInput<SyncWorkspaceDto>();
         var delay = int.Parse(Environment.GetEnvironmentVariable("GetTeamExtendedInformationAndIndexItActivityDelayInMiliseconds") ?? "10");
         await Task.Delay(delay);
 
         workspaceWithGroup.UpdateWorkspaceWithGraphInfo();
+
+        log.LogInformation($"{nameof(GetTeamExtendedInformationAndIndexItActivity)}_Finished. Id: {context.InstanceId}");
 
         return workspaceWithGroup;
     }
