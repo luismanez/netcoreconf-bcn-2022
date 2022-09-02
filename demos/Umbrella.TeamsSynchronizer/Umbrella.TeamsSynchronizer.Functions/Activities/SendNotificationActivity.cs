@@ -21,7 +21,7 @@ public class SendNotificationActivity
 
         // Simulates creating a report with details about all the Teams that have been synced/removed
         // and sends a notification (Email, Teams feed...) with that report
-        var syncedTeams = context.GetInput<IEnumerable<SyncWorkspaceDto>>();
+        var syncedTeams = context.GetInput<IEnumerable<SyncTeamDto>>();
         var delay = int.Parse(Environment.GetEnvironmentVariable("SendNotificationActivityDelayInMiliseconds") ?? "10");
         await Task.Delay(delay);
 

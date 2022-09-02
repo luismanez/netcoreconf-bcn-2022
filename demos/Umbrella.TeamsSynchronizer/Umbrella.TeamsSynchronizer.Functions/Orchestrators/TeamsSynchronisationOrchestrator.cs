@@ -3,7 +3,6 @@ using Microsoft.Azure.WebJobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Umbrella.TeamsSynchronizer.Models;
@@ -25,20 +24,20 @@ public class TeamsSynchronisationOrchestrator
             log.LogInformation($"TeamsSynchronisationOrchestrator_Started. InstanceId: {context.InstanceId}. ParentId: {context.ParentInstanceId}");
 
             var teamsToProcess = 
-                await context.CallActivityAsync<IEnumerable<SyncWorkspaceDto>>(nameof(GetAllTeamsFromGraphActivity), null);
+                await context.CallActivityAsync<IEnumerable<SyncTeamDto>>(nameof(GetAllTeamsFromGraphActivity), null);
 
             // Fan out / in Durable Functions pattern
-            var workspacesToSyncTasks = new List<Task<SyncWorkspaceDto>>();
-            foreach (var workspace in teamsToProcess)
+            var teamsToSyncTasks = new List<Task<SyncTeamDto>>();
+            foreach (var team in teamsToProcess)
             {
-                Task<SyncWorkspaceDto> workspacesToSyncTask =
-                    context.CallActivityAsync<SyncWorkspaceDto>(
+                Task<SyncTeamDto> teamToSyncTask =
+                    context.CallActivityAsync<SyncTeamDto>(
                         nameof(GetTeamExtendedInformationAndIndexItActivity), 
-                        workspace);
+                        team);
 
-                workspacesToSyncTasks.Add(workspacesToSyncTask);
+                teamsToSyncTasks.Add(teamToSyncTask);
             }
-            var syncedTeams = (await Task.WhenAll(workspacesToSyncTasks)).ToList();
+            var syncedTeams = (await Task.WhenAll(teamsToSyncTasks)).ToList();
 
 
             await context.CallActivityAsync(nameof(CleanUpActivity), syncedTeams);

@@ -3,9 +3,9 @@ using Umbrella.TeamsSynchronizer.Common;
 
 namespace Umbrella.TeamsSynchronizer.Models;
 
-public class SyncWorkspaceDto
+public class SyncTeamDto
 {
-    public Guid WorkspaceId { get; set; }
+    public Guid Id { get; set; }
     public DateTime CreatedDateTime { get; set; }
     public DateTime LastUpdatedDateTime { get; set; }
     public Guid CreatedByUserId { get; set; }
@@ -31,7 +31,7 @@ public class SyncWorkspaceDto
         return JsonSerializer.Serialize(this);
     }
 
-    public void UpdateWorkspaceWithGraphInfo()
+    public void UpdateTeamWithGraphInfo()
     {
         var random = new Random();
 
@@ -64,18 +64,11 @@ public class SyncWorkspaceDto
         return users;
     }
 
-    public void UpdateWorkspaceWithSharePointInfo()
+    public static SyncTeamDto NewFakeTeamDto()
     {
-        SiteId = Guid.NewGuid().ToString();
-        LastUpdatedDateTime = DateTime.Now;
-        SiteAbsoluteUrl = $"https://marvel.sharepoint.com/sites/{MailNickname}";
-    }
-
-    public static SyncWorkspaceDto NewFakeWorkspaceDto()
-    {
-        return new SyncWorkspaceDto
+        return new SyncTeamDto
         {
-            WorkspaceId = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             IsPublic = true,
             CreatedDateTime = DateTime.Now,
             LastUpdatedDateTime = DateTime.MinValue,

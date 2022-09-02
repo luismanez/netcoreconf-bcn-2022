@@ -8,21 +8,43 @@
       }
     },
     "logLevel": {
-      //"DurableTask.Core": "Warning",
+      "DurableTask.Core": "Warning",
+      "DurableTask.SqlServer": "Warning",
+      "DurableTask.Netherite": "Warning",
+      "DurableTask.Netherite.FasterStorage": "Warning",
+      "DurableTask.Netherite.EventHubsTransport": "Warning",
+      "DurableTask.Netherite.Events": "Warning",
+      "DurableTask.Netherite.WorkItems": "Warning",
+      "DurableTask.Netherite.Client": "Warning",
+      "DurableTask.Netherite.LoadMonitor": "Warning",
       "Function.TeamsSyncHttpTrigger.User": "Trace",
       "Function.TeamsSynchronisationOrchestrator.User": "Trace",
       "Function.CleanUpActivity.User": "Trace",
       "Function.GetAllTeamsFromGraphActivity.User": "Trace",
       "Function.GetTeamExtendedInformationAndIndexItActivity.User": "Trace",
       "Function.SendNotificationActivity.User": "Trace",
-      "default": "None"
+      "default": "Warning"
     }
   },
   "extensions": {
     "durableTask": {
+      "maxConcurrentOrchestratorFunctions": 2,
+      "maxConcurrentActivityFunctions": 4,
       "hubName": "TeamsSynchronisation",
+      //"storageProvider": {
+      //  "connectionStringName": "DurableStorageUsageConnectionString"
+      //},
+      //"storageProvider": {
+      //  "type": "mssql",
+      //  "connectionStringName": "TeamsSynchronizerSqlStorageProvider",
+      //  "taskEventLockTimeout": "00:02:00",
+      //  "createDatabaseIfNotExists": false,
+      //  "schemaName": null
+      //},
       "storageProvider": {
-        "connectionStringName": "DurableStorageUsageConnectionString"
+        "type": "Netherite",
+        "StorageConnectionName": "AzureWebJobsStorage",
+        "EventHubsConnectionName": "EventHubsConnection"
       },
       "tracing": {
         "traceInputsAndOutputs": false,
