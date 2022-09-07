@@ -28,8 +28,8 @@
   },
   "extensions": {
     "durableTask": {
-      "maxConcurrentOrchestratorFunctions": 2,
-      "maxConcurrentActivityFunctions": 4,
+      "maxConcurrentOrchestratorFunctions": 1,
+      "maxConcurrentActivityFunctions": 2,
       "hubName": "TeamsSynchronisation",
       //"storageProvider": {
       //  "connectionStringName": "DurableStorageUsageConnectionString"
@@ -43,6 +43,7 @@
       //},
       "storageProvider": {
         "type": "Netherite",
+        //"InstanceCacheSizeMB": "200",
         "StorageConnectionName": "AzureWebJobsStorage",
         "EventHubsConnectionName": "EventHubsConnection"
       },
