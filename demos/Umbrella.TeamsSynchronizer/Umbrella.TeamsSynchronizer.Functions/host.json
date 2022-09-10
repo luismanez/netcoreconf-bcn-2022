@@ -28,25 +28,28 @@
   },
   "extensions": {
     "durableTask": {
-      "maxConcurrentOrchestratorFunctions": 1,
-      "maxConcurrentActivityFunctions": 2,
       "hubName": "TeamsSynchronisation",
-      //"storageProvider": {
-      //  "connectionStringName": "DurableStorageUsageConnectionString"
-      //},
+
+      // Azure Storage Provider
+      "storageProvider": {
+        "connectionStringName": "DurableStorageUsageConnectionString"
+      },
+
+      // SQL Server Storage Provider (https://microsoft.github.io/durabletask-mssql/#/README)
       //"storageProvider": {
       //  "type": "mssql",
       //  "connectionStringName": "TeamsSynchronizerSqlStorageProvider",
-      //  "taskEventLockTimeout": "00:02:00",
       //  "createDatabaseIfNotExists": false,
       //  "schemaName": null
       //},
-      "storageProvider": {
-        "type": "Netherite",
-        //"InstanceCacheSizeMB": "200",
-        "StorageConnectionName": "AzureWebJobsStorage",
-        "EventHubsConnectionName": "EventHubsConnection"
-      },
+
+      // Netherite Storage Provider
+      //"storageProvider": {
+      //  "type": "Netherite",
+      //  "StorageConnectionName": "AzureWebJobsStorage",
+      //  "EventHubsConnectionName": "EventHubsConnection"
+      //},
+
       "tracing": {
         "traceInputsAndOutputs": false,
         "traceReplayEvents": false

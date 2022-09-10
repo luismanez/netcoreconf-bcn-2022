@@ -23,8 +23,10 @@ public class TeamsSynchronisationOrchestrator
 
             log.LogInformation($"TeamsSynchronisationOrchestrator_Started. InstanceId: {context.InstanceId}. ParentId: {context.ParentInstanceId}");
 
+            var itemsToProcessCount = context.GetInput<int>();
+
             var teamsToProcess = 
-                await context.CallActivityAsync<IEnumerable<SyncTeamDto>>(nameof(GetAllTeamsFromGraphActivity), null);
+                await context.CallActivityAsync<IEnumerable<SyncTeamDto>>(nameof(GetAllTeamsFromGraphActivity), itemsToProcessCount);
 
             // Fan out / in Durable Functions pattern
             var teamsToSyncTasks = new List<Task<SyncTeamDto>>();

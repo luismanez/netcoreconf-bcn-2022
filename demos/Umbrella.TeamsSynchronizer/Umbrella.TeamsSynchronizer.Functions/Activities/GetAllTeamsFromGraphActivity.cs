@@ -2,8 +2,6 @@
 using Microsoft.Azure.WebJobs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Umbrella.TeamsSynchronizer.Models;
 using Microsoft.Extensions.Logging;
@@ -17,15 +15,12 @@ public class GetAllTeamsFromGraphActivity
             [ActivityTrigger] IDurableActivityContext activityContext,
             ILogger log)
     {
-        var totalTeamsToProcessCount = 
-            int.Parse(Environment.GetEnvironmentVariable("NumberOfItemsToProcess") ?? "3");
-        
+        var totalTeamsToProcessCount = activityContext.GetInput<int>();
+       
         log.LogInformation($"GetAllTeamsFromGraphActivity_Started. ItemsToProcess: {totalTeamsToProcessCount}. InstanceId: {activityContext.InstanceId}");
 
         var delay = int.Parse(Environment.GetEnvironmentVariable("GetAllTeamsFromGraphActivityDelayInMiliseconds") ?? "10");
-        await Task.Delay(delay);
-        
-        //log.LogDebug($"GetAllTeamsFromGraphActivityDelay: {delay}");
+        await Task.Delay(delay);      
 
         var highVolumeList = new List<SyncTeamDto>();
 
