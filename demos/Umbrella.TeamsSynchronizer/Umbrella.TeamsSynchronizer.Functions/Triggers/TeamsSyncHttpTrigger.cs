@@ -26,7 +26,9 @@ public class TeamsSyncHttpTrigger
 
         if (itemsToProcessCount < 1) return new BadRequestObjectResult("Items to process must be greater than 0");
 
-        var instanceId = await starter.StartNewAsync(nameof(TeamsSynchronisationOrchestrator), (object) itemsToProcessCount);
+        var instanceId = await starter.StartNewAsync(
+            nameof(TeamsSynchronisationOrchestrator), 
+            (object) itemsToProcessCount);
 
         return starter.CreateCheckStatusResponse(req, instanceId);
     }

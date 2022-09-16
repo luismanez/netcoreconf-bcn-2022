@@ -26,7 +26,6 @@ public class GetAllTeamsFromGraphActivity
 
         // Simulate calling an external API and return a High volume list of data
         // The issue happens with about 25k items. Tests were done with 30k.
-        // (we have other production environments with about 10k items and are working fine)
         for (var i = 0; i < totalTeamsToProcessCount; i++)
         {
             highVolumeList.Add(SyncTeamDto.NewFakeTeamDto());
